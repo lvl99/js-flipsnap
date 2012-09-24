@@ -73,6 +73,7 @@ Flipsnap.prototype.init = function(element, opts) {
 	self.maxPoint = (opts.maxPoint === undefined) ? null : opts.maxPoint;
 	self.disableTouch = (opts.disableTouch === undefined) ? false : opts.disableTouch;
 	self.disable3d = (opts.disable3d === undefined) ? false : opts.disable3d;
+	self.moveReadyMinimum = (opts.moveReadyMinimum === undefined) ? 50 : opts.moveReadyMinimum;
 
 	// set property
 	self.currentPoint = 0;
@@ -303,13 +304,13 @@ Flipsnap.prototype._touchMove = function(event) {
 	else {
 		deltaX = Math.abs(pageX - self.startPageX);
 		deltaY = Math.abs(pageY - self.startPageY);
-		if (deltaX > 5) {
+		if (deltaX > self.moveReadyMinimum) {
 			event.preventDefault();
 			event.stopPropagation();
 			self.moveReady = true;
 			self.element.addEventListener('click', self, true);
 		}
-		else if (deltaY > 5) {
+		else if (deltaY > self.moveReadyMinimum) {
 			self.scrolling = false;
 		}
 	}
